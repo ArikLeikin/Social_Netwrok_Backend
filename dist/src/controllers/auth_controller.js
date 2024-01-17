@@ -42,6 +42,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
+    console.log("Email: " + email + " PASSWORD: " + password);
     if (!email || !password) {
         return res.status(400).send("missing email or password");
     }

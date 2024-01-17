@@ -26,6 +26,8 @@ export class BaseController<ModelType> {
   async getById(req: Request, res: Response) {
     try {
       const item = await this.model.findById(req.params.id);
+      console.log("IDdddddddddd: " + item);
+
       if (!item) {
         res.status(404).json({ message: "Not Found" });
         return;
@@ -38,7 +40,7 @@ export class BaseController<ModelType> {
   }
 
   async post(req: Request, res: Response) {
-    console.log("Post method in base controller ===> " + req.body);
+    console.log("Post method in base controller ===> " + req);
     try {
       const obj = await this.model.create(req.body);
       res.status(201).send(obj);

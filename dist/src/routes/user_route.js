@@ -12,12 +12,12 @@ const userController = new base_controller_1.BaseController(post_model_1.default
 // get all likes
 router.get("/", auth_middleware_1.default, userController.get.bind(userController));
 // get specific like by id
-router.get("/:likeId", auth_middleware_1.default, userController.get.bind(userController));
+router.get("/:likeId", auth_middleware_1.default, userController.getById.bind(userController));
 // create a new like
 router.post("/create", auth_middleware_1.default, userController.post.bind(userController));
 // edit a like by id
-router.put("/edit", auth_middleware_1.default, userController.get.bind(userController));
+router.put("/edit/:id", auth_middleware_1.default, userController.putById.bind(userController));
 // delete a post by id
-router.delete("/delete", auth_middleware_1.default, userController.get.bind(userController));
+router.delete("/delete/:id", auth_middleware_1.default, userController.deleteById.bind(userController));
 exports.default = router;
 //# sourceMappingURL=user_route.js.map

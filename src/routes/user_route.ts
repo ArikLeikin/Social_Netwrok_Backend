@@ -11,7 +11,11 @@ const userController = new BaseController(PostModel);
 router.get("/", authMiddleware, userController.get.bind(userController));
 
 // get specific like by id
-router.get("/:likeId", authMiddleware, userController.get.bind(userController));
+router.get(
+  "/:likeId",
+  authMiddleware,
+  userController.getById.bind(userController)
+);
 
 // create a new like
 router.post(
@@ -21,13 +25,17 @@ router.post(
 );
 
 // edit a like by id
-router.put("/edit", authMiddleware, userController.get.bind(userController));
+router.put(
+  "/edit/:id",
+  authMiddleware,
+  userController.putById.bind(userController)
+);
 
 // delete a post by id
 router.delete(
-  "/delete",
+  "/delete/:id",
   authMiddleware,
-  userController.get.bind(userController)
+  userController.deleteById.bind(userController)
 );
 
 export default router;

@@ -14,7 +14,7 @@ router.get("/likes", authMiddleware, postController.get.bind(postController));
 router.get(
   "/likes/:likeId",
   authMiddleware,
-  postController.get.bind(postController)
+  postController.getById.bind(postController)
 );
 
 // create a new like
@@ -25,13 +25,17 @@ router.post(
 );
 
 // edit a like by id
-router.put("/edit", authMiddleware, postController.get.bind(postController));
+router.put(
+  "/edit/:id",
+  authMiddleware,
+  postController.putById.bind(postController)
+);
 
 // delete a post by id
 router.delete(
-  "/delete",
+  "/delete/:id",
   authMiddleware,
-  postController.get.bind(postController)
+  postController.deleteById.bind(postController)
 );
 
 export default router;

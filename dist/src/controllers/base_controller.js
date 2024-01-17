@@ -34,6 +34,7 @@ class BaseController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const item = yield this.model.findById(req.params.id);
+                console.log("IDdddddddddd: " + item);
                 if (!item) {
                     res.status(404).json({ message: "Not Found" });
                     return;
@@ -48,7 +49,7 @@ class BaseController {
     }
     post(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Post method in base controller ===> " + req.body);
+            console.log("Post method in base controller ===> " + req);
             try {
                 const obj = yield this.model.create(req.body);
                 res.status(201).send(obj);

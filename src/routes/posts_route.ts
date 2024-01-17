@@ -8,13 +8,13 @@ import authMiddleware from "../middleware/auth_middleware";
 const postController = new BaseController(PostModel);
 
 // get all posts
-router.get("/posts", authMiddleware, postController.get.bind(postController));
+router.get("/", authMiddleware, postController.get.bind(postController));
 
 // get specific post by id
 router.get(
-  "/post/:postId",
+  "/post/:id",
   authMiddleware,
-  postController.get.bind(postController)
+  postController.getById.bind(postController)
 );
 
 // create a new post
@@ -25,13 +25,17 @@ router.post(
 );
 
 // edit a post by id
-router.put("/edit", authMiddleware, postController.get.bind(postController));
+router.put(
+  "/edit/:id",
+  authMiddleware,
+  postController.putById.bind(postController)
+);
 
 // delete a post by id
 router.delete(
-  "/delete",
+  "/delete/:id",
   authMiddleware,
-  postController.get.bind(postController)
+  postController.deleteById.bind(postController)
 );
 
 export default router;

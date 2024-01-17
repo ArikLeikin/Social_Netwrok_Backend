@@ -16,7 +16,7 @@ router.get(
 
 // get specific comment by id
 router.get(
-  "/comment/:commentId",
+  "/:commentId",
   authMiddleware,
   postController.get.bind(postController)
 );
@@ -29,13 +29,17 @@ router.post(
 );
 
 // edit a post by id
-router.put("/edit", authMiddleware, postController.get.bind(postController));
+router.put(
+  "/edit/:id",
+  authMiddleware,
+  postController.putById.bind(postController)
+);
 
 // delete a post by id
 router.delete(
-  "/delete",
+  "/delete/:id",
   authMiddleware,
-  postController.get.bind(postController)
+  postController.deleteById.bind(postController)
 );
 
 export default router;

@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+
   if (!email || !password) {
     return res.status(400).send("Missing email or password");
   }
@@ -31,6 +32,7 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+  console.log("Email: " + email + " PASSWORD: " + password);
   if (!email || !password) {
     return res.status(400).send("missing email or password");
   }

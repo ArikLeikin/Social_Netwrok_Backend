@@ -12,12 +12,12 @@ const postController = new base_controller_1.BaseController(post_model_1.default
 // get all comments
 router.get("/comments", auth_middleware_1.default, postController.get.bind(postController));
 // get specific comment by id
-router.get("/comment/:commentId", auth_middleware_1.default, postController.get.bind(postController));
+router.get("/:commentId", auth_middleware_1.default, postController.get.bind(postController));
 // create a new post
 router.post("/create", auth_middleware_1.default, postController.post.bind(postController));
 // edit a post by id
-router.put("/edit", auth_middleware_1.default, postController.get.bind(postController));
+router.put("/edit/:id", auth_middleware_1.default, postController.putById.bind(postController));
 // delete a post by id
-router.delete("/delete", auth_middleware_1.default, postController.get.bind(postController));
+router.delete("/delete/:id", auth_middleware_1.default, postController.deleteById.bind(postController));
 exports.default = router;
 //# sourceMappingURL=comment_route.js.map
