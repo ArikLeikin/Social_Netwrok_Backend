@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../models/user_model"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const uuid_1 = require("uuid");
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -114,6 +115,7 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         try {
             const userDb = yield user_model_1.default.findOne({ _id: user._id });
+            console.log("USER TOKENS: " + userDb.refreshTokens);
             if (!userDb.refreshTokens ||
                 !userDb.refreshTokens.includes(refreshToken)) {
                 userDb.refreshTokens = [];
@@ -121,13 +123,14 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 return res.sendStatus(401);
             }
             const accessToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION });
-            const newRefreshToken = jsonwebtoken_1.default.sign({ _id: user._id }, process.env.JWT_REFRESH_SECRET);
+            const uniqueId = (0, uuid_1.v4)();
+            const newRefreshToken = jsonwebtoken_1.default.sign({ _id: user._id, uniqueId }, process.env.JWT_REFRESH_SECRET);
             userDb.refreshTokens = userDb.refreshTokens.filter((t) => t !== refreshToken);
             userDb.refreshTokens.push(newRefreshToken);
             yield userDb.save();
             return res.status(200).send({
                 accessToken: accessToken,
-                refreshToken: refreshToken,
+                refreshToken: newRefreshToken,
             });
         }
         catch (err) {

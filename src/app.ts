@@ -7,6 +7,7 @@ import authRoute from "./routes/auth_route";
 import mainRoute from "./routes/main_route";
 import postRoute from "./routes/posts_route";
 import likeRoute from "./routes/likes_route";
+import userRoute from "./routes/user_route";
 
 const initApp = (): Promise<Express> => {
   const promise = new Promise<Express>((resolve) => {
@@ -20,6 +21,7 @@ const initApp = (): Promise<Express> => {
       app.use(bodyParser.urlencoded({ extended: true }));
       app.use(mainRoute);
       app.use("/auth", authRoute);
+      app.use("/user", userRoute);
       app.use("/posts", postRoute);
       app.use("/likes", likeRoute);
 

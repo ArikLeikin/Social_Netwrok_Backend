@@ -3,6 +3,7 @@ import User from "../models/user_model";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import UserModel from "../models/user_model";
+import { v4 as uuidv4 } from "uuid";
 
 const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -113,6 +114,8 @@ const refresh = async (req: Request, res: Response) => {
       }
       try {
         const userDb = await User.findOne({ _id: user._id });
+        console.log("USER TOKENS: " + userDb.refreshTokens);
+
         if (
           !userDb.refreshTokens ||
           !userDb.refreshTokens.includes(refreshToken)
@@ -126,8 +129,9 @@ const refresh = async (req: Request, res: Response) => {
           process.env.JWT_SECRET,
           { expiresIn: process.env.JWT_EXPIRATION }
         );
+        const uniqueId = uuidv4();
         const newRefreshToken = jwt.sign(
-          { _id: user._id },
+          { _id: user._id, uniqueId },
           process.env.JWT_REFRESH_SECRET
         );
         userDb.refreshTokens = userDb.refreshTokens.filter(
@@ -137,7 +141,7 @@ const refresh = async (req: Request, res: Response) => {
         await userDb.save();
         return res.status(200).send({
           accessToken: accessToken,
-          refreshToken: refreshToken,
+          refreshToken: newRefreshToken,
         });
       } catch (err) {
         res.sendStatus(401).send(err.message);

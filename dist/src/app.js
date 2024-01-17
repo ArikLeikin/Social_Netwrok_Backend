@@ -12,6 +12,7 @@ const auth_route_1 = __importDefault(require("./routes/auth_route"));
 const main_route_1 = __importDefault(require("./routes/main_route"));
 const posts_route_1 = __importDefault(require("./routes/posts_route"));
 const likes_route_1 = __importDefault(require("./routes/likes_route"));
+const user_route_1 = __importDefault(require("./routes/user_route"));
 const initApp = () => {
     const promise = new Promise((resolve) => {
         const db = mongoose_1.default.connection;
@@ -24,6 +25,7 @@ const initApp = () => {
             app.use(body_parser_1.default.urlencoded({ extended: true }));
             app.use(main_route_1.default);
             app.use("/auth", auth_route_1.default);
+            app.use("/user", user_route_1.default);
             app.use("/posts", posts_route_1.default);
             app.use("/likes", likes_route_1.default);
             resolve(app);

@@ -1,18 +1,22 @@
 import express from "express";
 const router = express.Router();
-import PostController from "../controllers/post_controller";
+import CommentController from "../controllers/comment_controller";
 import { BaseController } from "../controllers/base_controller";
 import PostModel from "../models/post_model";
 import authMiddleware from "../middleware/auth_middleware";
 
 const postController = new BaseController(PostModel);
 
-// get all posts
-router.get("/posts", authMiddleware, postController.get.bind(postController));
-
-// get specific post by id
+// get all comments
 router.get(
-  "/post/:postId",
+  "/comments",
+  authMiddleware,
+  postController.get.bind(postController)
+);
+
+// get specific comment by id
+router.get(
+  "/comment/:commentId",
   authMiddleware,
   postController.get.bind(postController)
 );

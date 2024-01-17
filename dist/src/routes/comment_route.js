@@ -9,10 +9,10 @@ const base_controller_1 = require("../controllers/base_controller");
 const post_model_1 = __importDefault(require("../models/post_model"));
 const auth_middleware_1 = __importDefault(require("../middleware/auth_middleware"));
 const postController = new base_controller_1.BaseController(post_model_1.default);
-// get all posts
-router.get("/posts", auth_middleware_1.default, postController.get.bind(postController));
-// get specific post by id
-router.get("/post/:postId", auth_middleware_1.default, postController.get.bind(postController));
+// get all comments
+router.get("/comments", auth_middleware_1.default, postController.get.bind(postController));
+// get specific comment by id
+router.get("/comment/:commentId", auth_middleware_1.default, postController.get.bind(postController));
 // create a new post
 router.post("/create", auth_middleware_1.default, postController.post.bind(postController));
 // edit a post by id
@@ -20,4 +20,4 @@ router.put("/edit", auth_middleware_1.default, postController.get.bind(postContr
 // delete a post by id
 router.delete("/delete", auth_middleware_1.default, postController.get.bind(postController));
 exports.default = router;
-//# sourceMappingURL=posts_route.js.map
+//# sourceMappingURL=comment_route.js.map
