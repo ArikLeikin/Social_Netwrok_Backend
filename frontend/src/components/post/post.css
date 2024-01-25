@@ -1,0 +1,22 @@
+hr {
+  border-top: 1px solid #ccc;
+  width: 100%;
+  margin: 0px;
+}
+
+.counts {
+  width: 100%;
+}
+
+.counts span {
+  font-size: large;
+  color: #8a8a8a;
+}
+
+.counts a {
+  color: #8a8a8a;
+}
+
+.likeButton {
+  cursor: pointer;
+}
