@@ -2,6 +2,11 @@ node_modules
 client-cert.pem
 client-csr.pem
 client-key.pem
+client.csr
 public
 dist
 coverage
+.env
+.envprod
+.env.swo
+.env.swp

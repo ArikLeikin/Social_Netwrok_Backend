@@ -5,8 +5,6 @@ export class BaseController<ModelType> {
   model: Model<ModelType>;
 
   constructor(model: Model<ModelType>) {
-    console.log("Model type:", typeof model);
-    console.log("Model value:", model);
     this.model = model;
   }
 
@@ -89,8 +87,6 @@ export class BaseController<ModelType> {
 }
 
 const createController = <ModelType>(model: Model<ModelType>) => {
-  //console.log("Create Controller ===> " + model);
-
   return new BaseController<ModelType>(model);
 };
 

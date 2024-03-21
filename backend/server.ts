@@ -18,7 +18,7 @@ initApp().then((app) => {
         version: "1.0.0",
         description: "REST server including authentication using JWT",
       },
-      servers: [{ url: "http://localhost:3000" }],
+      servers: [{ url: "https://node40.cs.colman.ac.il:80" }],
     },
     apis: ["./backend/routes/*.ts"],
   };
@@ -30,6 +30,7 @@ initApp().then((app) => {
     http.createServer(app).listen(port);
     console.log(`app is listening to port: ${port}`);
   }
+
   const options = {
     key: fs.readFileSync(clientKey),
     cert: fs.readFileSync(clientCert),

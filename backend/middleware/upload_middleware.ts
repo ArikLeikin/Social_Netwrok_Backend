@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from "express";
 
 const storage = multer.diskStorage({
   destination: (req: Request, file: Express.Multer.File, cb: Callback) => {
+   
     cb(null, path.join(__dirname, "../public"));
   },
   filename: (req: Request, file: Express.Multer.File, cb: Callback) => {
@@ -37,6 +38,8 @@ const upload = multer({
 
 const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
   upload(req, res, (err: string | Error) => {
+
+    
     if (err) {
       const message = typeof err === "string" ? err : err.message;
       if (message === "Invalid file type") {

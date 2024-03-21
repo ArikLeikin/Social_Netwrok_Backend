@@ -18,31 +18,23 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const userActivity_model_1 = __importDefault(require("../models/userActivity_model"));
 const google_auth_library_1 = require("google-auth-library");
 const path_1 = __importDefault(require("path"));
-const crypto_1 = __importDefault(require("crypto"));
 const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     try {
         const ticket = yield client.verifyIdToken({
             idToken: req.body.credential,
             audience: process.env.GOOGLE_CLIENT_ID,
         });
         const payload = ticket.getPayload();
-        console.log("payload", payload);
         const email = payload === null || payload === void 0 ? void 0 : payload.email;
-        console.log("email", email);
         if (email != null) {
             let user = yield user_model_1.default.findOne({ email: email });
-            console.log("find user", user);
-            console.log("user picture", payload === null || payload === void 0 ? void 0 : payload.picture);
             if (user == null) {
-                const encryptedPassword = crypto_1.default.randomBytes(5).toString("hex");
                 user = yield user_model_1.default.create({
                     email: email,
-                    password: encryptedPassword,
+                    password: "1010",
                     profileImage: payload === null || payload === void 0 ? void 0 : payload.picture,
                 });
-                console.log("create user", user);
                 yield userActivity_model_1.default.create({
                     user: user._id,
                     email: user.email,
@@ -52,7 +44,6 @@ const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 });
             }
             const tokens = yield generateTokens(user);
-            console.log("tokens", tokens);
             res.status(200).send(Object.assign({ email: user.email, _id: user._id, profileImage: user.profileImage, password: user.password }, tokens));
         }
     }
@@ -61,8 +52,6 @@ const googleSignin = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log("register");
-    console.log("req.body", req.body);
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).send("Missing email or password");
@@ -113,7 +102,6 @@ const generateTokens = (user) => __awaiter(void 0, void 0, void 0, function* () 
     };
 });
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log("login");
     const { email, password } = req.body;
     if (!email || !password) {
         return res.status(400).send("missing email or password");
@@ -128,7 +116,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(401).send("email or password incorrect");
         }
         const tokens = yield generateTokens(user);
-        return res.status(200).json(Object.assign({ email: user.email, _id: user._id, profileImage: user.profileImage, password: user.password }, tokens));
+        return res.status(200).json(Object.assign({ email: user.email, _id: user._id, profileImage: user.profileImage, password: req.body.password }, tokens));
     }
     catch (error) {
         console.log(error);
@@ -136,7 +124,6 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log("logout");
     const authHeader = req.headers["authorization"];
     const refreshToken = authHeader && authHeader.split(" ")[1]; // Bearer <token>
     if (refreshToken == null)

@@ -54,6 +54,7 @@ class PostController extends BaseController<IPost> {
   }
 
   async post(req: Request, res: Response) {
+
     const user = await User.findById(req.body.user);
     if (!user) {
       res.status(404).send("User not found");
@@ -63,7 +64,6 @@ class PostController extends BaseController<IPost> {
     try {
       if (req.file) {
         req.body.picture = path.basename(req.file.path);
-        console.log("req.body.picture: " + path.basename(req.file.path));
       }
       const post = await Post.create(req.body);
       if (post) {

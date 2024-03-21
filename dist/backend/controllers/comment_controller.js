@@ -23,8 +23,6 @@ class CommentsController extends base_controller_1.BaseController {
     }
     post(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            // console.log("Post method in base controller ===> " + req.body);
-            // console.log("Post method in base controller ===> " + req.params.id);
             try {
                 const user = yield userActivity_model_1.default.findOne({ user: req.body.user });
                 if (!user) {
@@ -32,7 +30,6 @@ class CommentsController extends base_controller_1.BaseController {
                     return;
                 }
                 const post = yield post_model_1.default.findById(req.params.id);
-                console.log(post);
                 if (!post) {
                     res.status(404).send("Post not found to add comment");
                     return;

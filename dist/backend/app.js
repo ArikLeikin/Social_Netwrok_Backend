@@ -15,7 +15,6 @@ const userActivity_route_1 = __importDefault(require("./routes/userActivity_rout
 const files_route_1 = __importDefault(require("./routes/files_route"));
 const user_route_1 = __importDefault(require("./routes/user_route"));
 const path_1 = __importDefault(require("path"));
-const cors_1 = __importDefault(require("cors"));
 const initApp = () => {
     const promise = new Promise((resolve) => {
         const db = mongoose_1.default.connection;
@@ -24,7 +23,13 @@ const initApp = () => {
         const url = process.env.DB_URL;
         mongoose_1.default.connect(url).then(() => {
             const app = (0, express_1.default)();
-            app.use((0, cors_1.default)());
+            app.use((req, res, next) => {
+                res.header("Access-Control-Allow-Origin", "*");
+                res.header("Access-Control-Allow-Methods", "*");
+                res.header("Access-Control-Allow-Headers", "*");
+                res.header("Access-Control-Allow-Credentials", "true");
+                next();
+            });
             app.use(body_parser_1.default.json());
             app.use(body_parser_1.default.urlencoded({ extended: true }));
             app.use("/auth", auth_route_1.default);

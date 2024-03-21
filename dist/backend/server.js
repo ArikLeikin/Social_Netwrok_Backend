@@ -22,7 +22,7 @@ const portHttps = process.env.HTTPS_PORT;
                 version: "1.0.0",
                 description: "REST server including authentication using JWT",
             },
-            servers: [{ url: "http://localhost:3000" }],
+            servers: [{ url: "https://node40.cs.colman.ac.il:80" }],
         },
         apis: ["./backend/routes/*.ts"],
     };

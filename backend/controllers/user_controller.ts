@@ -12,14 +12,12 @@ class UserController extends BaseController<IUser> {
     super(User);
   }
   async updatePassword(req: Request, res: Response) {
-    console.log("req.body", req.body);
-    console.log("current password", req.body.password);
-    console.log("new password", req.body.newPassword);
+
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).send("User not found");
     }
-    console.log("user password", user.password);
+
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
@@ -27,10 +25,10 @@ class UserController extends BaseController<IUser> {
     if (!validPassword) {
       return res.status(400).send("Invalid password");
     }
-    console.log("user old password - controller", user.password);
+    
     user.password = await bcrypt.hash(req.body.newPassword, 10);
     await user.save();
-    console.log("user new password - coontroller", user.password);
+    
 
     res.json({ message: "Password updated", password: user.password });
   }
@@ -49,6 +47,8 @@ class UserController extends BaseController<IUser> {
   }
 
   async updateProfilePicture(req: Request, res: Response) {
+  
+    
     if (!req.file) {
       return res.status(400).send("No picture uploaded");
     } else {
@@ -56,8 +56,7 @@ class UserController extends BaseController<IUser> {
       if (!user) {
         return res.status(404).send("User not found");
       }
-      console.log("req.file", req.file);
-      console.log("req.file.filename", req.file.filename);
+  
 
       user.profileImage = req.file.filename;
       await user.save();

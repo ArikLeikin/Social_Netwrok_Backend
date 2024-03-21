@@ -9,6 +9,7 @@ const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  
   const authHeader = req.headers["authorization"];
   if (!authHeader) return res.status(401).send("Unauthorized");
   const token = authHeader && authHeader.split(" ")[1]; // Bearer <token>

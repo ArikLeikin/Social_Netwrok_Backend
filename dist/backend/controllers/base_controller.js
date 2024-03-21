@@ -12,8 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseController = void 0;
 class BaseController {
     constructor(model) {
-        console.log("Model type:", typeof model);
-        console.log("Model value:", model);
         this.model = model;
     }
     // handleServerError(res: Response, error: Error) {}
@@ -101,7 +99,6 @@ class BaseController {
 }
 exports.BaseController = BaseController;
 const createController = (model) => {
-    //console.log("Create Controller ===> " + model);
     return new BaseController(model);
 };
 exports.default = createController;

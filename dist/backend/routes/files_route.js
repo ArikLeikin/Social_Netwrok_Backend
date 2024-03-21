@@ -52,13 +52,11 @@ const base = "http://localhost:3000";
  *         description: Internal server error
  */
 router.post("/", upload_middleware_1.default, validPicture_middleware_1.default, (req, res) => {
-    console.log("router.post");
     if (!req.file) {
         res.status(400).send({ error: "No file uploaded" });
         return;
     }
     else {
-        console.log("router.post(/file: " + base + "/public/" + req.file.filename);
         res.status(200).send({ url: base + "/public/" + req.file.filename });
     }
 });

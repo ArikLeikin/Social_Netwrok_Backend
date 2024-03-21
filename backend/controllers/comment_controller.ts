@@ -11,8 +11,7 @@ class CommentsController extends BaseController<IComment> {
   }
 
   async post(req: Request, res: Response): Promise<void> {
-    // console.log("Post method in base controller ===> " + req.body);
-    // console.log("Post method in base controller ===> " + req.params.id);
+
     try {
       const user = await UserActivity.findOne({ user: req.body.user });
       if (!user) {
@@ -20,7 +19,7 @@ class CommentsController extends BaseController<IComment> {
         return;
       }
       const post = await Post.findById(req.params.id);
-      console.log(post);
+  
       if (!post) {
         res.status(404).send("Post not found to add comment");
         return;

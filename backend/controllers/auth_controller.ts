@@ -8,7 +8,6 @@ import { Document } from "mongoose";
 import path from "path";
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const googleSignin = async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const ticket = await client.verifyIdToken({
       idToken: req.body.credential,
@@ -16,14 +15,11 @@ const googleSignin = async (req: Request, res: Response) => {
     });
 
     const payload = ticket.getPayload();
-    console.log("payload", payload);
 
     const email = payload?.email;
-    console.log("email", email);
     if (email != null) {
       let user = await User.findOne({ email: email });
-      console.log("find user", user);
-      console.log("user picture", payload?.picture);
+   
 
       if (user == null) {
         user = await User.create({
@@ -31,7 +27,7 @@ const googleSignin = async (req: Request, res: Response) => {
           password: "1010",
           profileImage: payload?.picture,
         });
-        console.log("create user", user);
+   
         await UserActivityModel.create({
           user: user._id,
           email: user.email,
@@ -42,7 +38,7 @@ const googleSignin = async (req: Request, res: Response) => {
       }
 
       const tokens = await generateTokens(user);
-      console.log("tokens", tokens);
+  
 
       res.status(200).send({
         email: user.email,
@@ -58,8 +54,7 @@ const googleSignin = async (req: Request, res: Response) => {
 };
 
 const register = async (req: Request, res: Response): Promise<Response> => {
-  // console.log("register");
-  console.log("req.body", req.body);
+
 
   const { email, password } = req.body;
   if (!email || !password) {
@@ -125,7 +120,7 @@ const generateTokens = async (user: Document & IUser) => {
 };
 
 const login = async (req: Request, res: Response) => {
-  // console.log("login");
+
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).send("missing email or password");
@@ -156,7 +151,7 @@ const login = async (req: Request, res: Response) => {
 };
 
 const logout = async (req: Request, res: Response) => {
-  // console.log("logout");
+
 
   const authHeader = req.headers["authorization"];
 

@@ -82,7 +82,6 @@ class PostController extends base_controller_1.BaseController {
             try {
                 if (req.file) {
                     req.body.picture = path_1.default.basename(req.file.path);
-                    console.log("req.body.picture: " + path_1.default.basename(req.file.path));
                 }
                 const post = yield post_model_1.default.create(req.body);
                 if (post) {

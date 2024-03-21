@@ -84,8 +84,6 @@ describe("Comment Test", () => {
       .send(comment1)
       .set("Authorization", `JWT ${accessTokenComment}`);
     expect(response.status).toBe(201);
-    console.log("response for create a comment");
-    console.log(response.body);
     expect(response.body.user).toBe(comment1.user);
     expect(response.body.post).toBe(comment1.post);
     expect(response.body.body).toBe(comment1.body);
@@ -174,39 +172,36 @@ describe("Comment Test", () => {
     expect(response.status).toBe(404);
     expect(response.text).toBe("User not found");
   });
-  // test("TEST 11: Post deleted cause comments to be deleted", async () => {
-  //   console.log("postId", postId);
-  //   const response = await request(app)
-  //     .delete(`/posts/${postId}`)
-  //     .set("Authorization", `JWT ${accessToken}`);
-  //   expect(response.status).toBe(200);
-  //   expect(response.body.message).toBe("Deleted successfully");
-  // });
-  // test("TEST 12: Get All Comments After Post Deleted", async () => {
-  //   console.log("test for get all comments after post deleted");
+  test("TEST 11: Post deleted cause comments to be deleted", async () => {
+  
+    const response = await request(app)
+      .delete(`/posts/${postId}`)
+      .set("Authorization", `JWT ${accessToken}`);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("Deleted successfully");
+  });
+  test("TEST 12: Get All Comments After Post Deleted", async () => {
 
-  //   const responseComment = await request(app).get(
-  //     `/posts/comments/AllComments`
-  //   );
-  //   expect(responseComment.status).toBe(200);
-  //   expect(responseComment.body.length).toBe(0);
-  // });
-  // test("TEST 13: Get All Posts of User After Post Deleted", async () => {
-  //   console.log("test for get all posts after post deleted");
-  //   const responseUserActivityPosts = await request(app)
-  //     .get(`/userActivity/${userId}/posts`)
-  //     .set("Authorization", `JWT ${accessToken}`);
-  //   expect(responseUserActivityPosts.status).toBe(200);
-  //   console.log("responseUserActivityPosts.body");
-  //   console.log(responseUserActivityPosts.body);
-  // });
-  // test("TEST 14: Get All Comments of User After Post Deleted", async () => {
-  //   const responseUserActivityComments = await request(app).get(
-  //     `/userActivity/${userId}/comments`
-  //   );
-  //   console.log("responseUserActivityComments.body");
-  //   console.log(responseUserActivityComments.body);
-  //   expect(responseUserActivityComments.status).toBe(200);
-  //   expect(responseUserActivityComments.body.length).toBe(0);
-  // });
+
+    const responseComment = await request(app).get(
+      `/posts/comments/AllComments`
+    );
+    expect(responseComment.status).toBe(200);
+    expect(responseComment.body.length).toBe(0);
+  });
+  test("TEST 13: Get All Posts of User After Post Deleted", async () => {
+  
+    const responseUserActivityPosts = await request(app)
+      .get(`/userActivity/${userId}/posts`)
+      .set("Authorization", `JWT ${accessToken}`);
+    expect(responseUserActivityPosts.status).toBe(200);
+
+  });
+  test("TEST 14: Get All Comments of User After Post Deleted", async () => {
+    const responseUserActivityComments = await request(app).get(
+      `/userActivity/${userId}/comments`
+    );
+    expect(responseUserActivityComments.status).toBe(200);
+    expect(responseUserActivityComments.body.length).toBe(0);
+  });
 });
